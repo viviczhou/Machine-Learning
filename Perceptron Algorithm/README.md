@@ -19,15 +19,15 @@ http://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html
 
 Zhou_perceptron.py: The python file filled all the TODOs.
 
-train_dev_acc_iter_uploaded.png: A plot for the accuracies of training set and development set. Shows how accuracy changes with the number of iterations (from 1 iterations to 110 iterations) when learning rate is constant (equals to 2).
+train_dev_acc_iter.png: A plot for the accuracies of training set and development set. Shows how accuracy changes with the number of iterations (from 1 iterations to 110 iterations) when learning rate is constant (equals to 2).
 
-train_dev_acc_lr_uploaded.png: A plot for the accuracies of training set and development set. Shows how accuracy changes with the learning rate (from 0.0 to 2.0 with step = 0.02),when number of iterations is constant (equals to 25).
+train_dev_acc_lr.png: A plot for the accuracies of training set and development set. Shows how accuracy changes with the learning rate (from 0.0 to 2.0 with step = 0.02),when number of iterations is constant (equals to 25).
 
-test_acc_iter_uploaded.png: A plot for the accuracies of testing set. Shows how accuracy changes with the number of iterations (from 1 iterations to 110 iterations) when learning rate is constant (equals to 2).
+test_acc_iter.png: A plot for the accuracies of testing set. Shows how accuracy changes with the number of iterations (from 1 iterations to 110 iterations) when learning rate is constant (equals to 2).
 
-test_acc_lr_uploaded.png: A plot for the accuracies of testing set. Shows how accuracy changes with the learning rate (from 0.0 to 2.0 with step = 0.02) when number of iterations is constant (equals to 25).
+test_acc_lr.png: A plot for the accuracies of testing set. Shows how accuracy changes with the learning rate (from 0.0 to 2.0 with step = 0.02) when number of iterations is constant (equals to 25).
 
-README.txt: This file.
+README.md: This file.
 
 
 
