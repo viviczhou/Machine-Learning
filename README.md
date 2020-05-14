@@ -69,11 +69,11 @@ This file including the python code that implemented EM fitting of a mixture of 
 
 ### Interface
 
-        --iterations [int]
-        Stop training after this many iterations through the data.
+    --iterations [int]
+    Stop training after this many iterations through the data.
 
-        --nodev
-        When present, do NOT use development data. When this argument isn't provided, the development data is used to control training.
+    --nodev
+    When present, do NOT use development data. When this argument isn't provided, the development data is used to control training.
 
     --clusters_file [filename]
     When present, initializes clusters (either Gaussian or aspect model) from the given file. Not allowed to be provided with --cluster_num (see below).
