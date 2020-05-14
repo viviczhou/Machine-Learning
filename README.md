@@ -44,13 +44,13 @@ This file including the python code that implemented backpropagation algorithm f
     Learning rate.
 
     --nodev
-    When present, do NOT use development data. When this argument isn't provided, the development data is used to control         training.
+    When present, do NOT use development data. When this argument isn't provided, the development data is used to control training.
 
     --weights_files [hidden_weights_filename] [output_weights_filename]
     When present, initialize the two matrices with the values present in these files. 
 
     --hidden_dim [int]
-    Only provided if --weights_files is NOT provided. Specifies the number of nodes in the network's single hidden layer.         **NOTE:** *the autograder will never use this. This argument is provided to you as a convenience.*
+    Only provided if --weights_files is NOT provided. Specifies the number of nodes in the network's single hidden layer. NOTE: the autograder will never use this. This argument is provided to you as a convenience.*
 
     --print_weights
     When present, print the two weight matrices. The skeleton file does this for you.
@@ -63,3 +63,31 @@ This file including the python code that implemented backpropagation algorithm f
 
     --test_file [filename]
     Load test data from here (default is /u/cs246/data/adult/a7a.test).
+
+## EM Algorithm Mixture of Gaussians
+This file including the python code that implemented EM fitting of a mixture of gaussians on the two-dimensional data set points.dat and the results of experiment with performance as a function of number of iterations, numbers of mixtures, various types of covariance matrices, and the use of dev set.
+
+### Interface
+
+        --iterations [int]
+        Stop training after this many iterations through the data.
+
+        --nodev
+        When present, do NOT use development data. When this argument isn't provided, the development data is used to control training.
+
+    --clusters_file [filename]
+    When present, initializes clusters (either Gaussian or aspect model) from the given file. Not allowed to be provided with --cluster_num (see below).
+
+    --cluster_num [int]
+    Only provided if --clusters_file is NOT provided. Specifies the number of clusters (hidden variables; K in the notes).  
+    
+    --print_params
+    When present, parameters of the clusters will be printed. 
+
+    --data_file [filename]
+    Load data from here. The last 10% will be reserved as dev data (and discarded if --nodev is provided).
+    
+## EM Algorithm HMM
+This file including the python code that implemented EM to train an HMM for the two-dimensional data set points.dat and the results of experiment with performance as a function of number of iterations, numbers of mixtures, various types of covariance matrices, and the use of dev set. The first 900 obervations are used as a single training sequence, and the last 100 are used as a single development sequence.
+
+The interface of this file is the same as the previous one.
