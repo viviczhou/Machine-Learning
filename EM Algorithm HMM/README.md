@@ -8,7 +8,6 @@ Algorithm: EM Algorithm (HMM)
 In this assignment, I conducted experiments with different values of --cluster_num and --iterations, implemented tied covariances as well as the standard, separate covariance setting, and took note of trends in both training and development data, compared HMM model and the original non-sequence model to see which one performs better, and found the best number of states.
 
 
-
 ## 2. Files Included:
 
 Zhou_hmm_gaussian.py: The python file filled all the TODOs.
@@ -54,3 +53,5 @@ The results are visualized. Please see LL_cluster_num.png for more details.
 ### 3.3 Does the HMM model the data better than the original non-sequence model?
 
 The log likelihood of HMM model is higher than that of the original model (both training set and dev set) when K is same and number of iterations is also the same. Thus, we can conclude that HMM model is better than the original non-sequence model. 
+
+The results are visualized. Please see model_compare.png for more details.
