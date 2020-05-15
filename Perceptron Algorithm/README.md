@@ -92,6 +92,3 @@ When run command
 
 	'--iterations # --lr #' without '--nodev'
 the model will return some outputs using the given learning rate and given iterations. The model will early stop.
-
-
-	(See the submitted files for reference)
