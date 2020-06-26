@@ -5,7 +5,6 @@ if not __file__.endswith('_em_gaussian.py'):
     exit(1)
 
 DATA_PATH = "/Users/zhouchunlei/Desktop/DATA SCIENCE/MACHINE LEARNING/HW7/em_smoke_test_files/"
-#TODO: if doing development somewhere other than the cycle server (not recommended), then change this to the directory where your data file is (points.dat)
 
 def parse_data(args):
     num = float
@@ -28,8 +27,7 @@ def init_model(args):
             sigmas = np.zeros((args.cluster_num,2,2))
         else:
             sigmas = np.zeros((2,2))
-        #TODO: randomly initialize clusters (lambdas, mus, and sigmas)
-        #raise NotImplementedError #remove when random initialization is implemented
+        #randomly initialize clusters (lambdas, mus, and sigmas)
 
         np.random.seed(seed)
         lambdas = np.tile(1/args.cluster_num,(args.cluster_num))
@@ -57,19 +55,13 @@ def init_model(args):
         mus = np.asarray(mus)
         sigmas = np.asarray(sigmas)
         args.cluster_num = len(lambdas)
-
-    #TODO: do whatever you want to pack the lambdas, mus, and sigmas into the model variable (just a tuple, or a class, etc.)
-    #NOTE: if args.tied was provided, sigmas will have a different shape
+        
     model = (lambdas, mus, sigmas)
-    #raise NotImplementedError #remove when model initialization is implemented
     return model
 
 def train_model(model, train_xs, dev_xs, args):
     from scipy.stats import multivariate_normal
-    #NOTE: you can use multivariate_normal like this:
-    #probability_of_xn_given_mu_and_sigma = multivariate_normal(mean=mu, cov=sigma).pdf(xn)
-    #TODO: train the model, respecting args (note that dev_xs is None if args.nodev is True)
-    #raise NotImplementedError #remove when model training is implemented
+    # train the model, respecting args (note that dev_xs is None if args.nodev is True)
     K = args.cluster_num
     N = train_xs.shape[0]
     lambdas, mus, sigmas = extract_parameters(model)
@@ -108,9 +100,8 @@ def train_model(model, train_xs, dev_xs, args):
 def average_log_likelihood(model, data, args):
     from math import log
     from scipy.stats import multivariate_normal
-    #TODO: implement average LL calculation (log likelihood of the data, divided by the length of the data)
+    # implement average LL calculation (log likelihood of the data, divided by the length of the data)
     ll = 0.0
-    #raise NotImplementedError #remove when average log likelihood calculation is implemented
     lambdas, mus, sigmas = extract_parameters(model)
     K = args.cluster_num
     N = data.shape[0]
@@ -125,17 +116,16 @@ def average_log_likelihood(model, data, args):
     return ll
 
 def extract_parameters(model):
-    #TODO: extract lambdas, mus, and sigmas from the model and return them (same type and shape as in init_model)
+    # extract lambdas, mus, and sigmas from the model and return them (same type and shape as in init_model)
     lambdas = model[0]
     mus = model[1]
     sigmas = model[2]
-    #raise NotImplementedError #remove when parameter extraction is implemented
     return lambdas, mus, sigmas
 
 def main():
     import argparse
     import os
-    print('Gaussian') #Do not change, and do not print anything before this.
+    print('Gaussian') 
     parser = argparse.ArgumentParser(description='Use EM to fit a set of points.')
     init_group = parser.add_mutually_exclusive_group(required=True)
     init_group.add_argument('--cluster_num', type=int, help='Randomly initialize this many clusters.')
