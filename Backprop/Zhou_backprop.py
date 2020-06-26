@@ -3,7 +3,7 @@ import numpy as np
 from io import StringIO
 
 NUM_FEATURES = 124 #features are 1 through 123 (123 only in test set), +1 for the bias
-DATA_PATH = "/u/cs246/data/adult/" #TODO: if doing development somewhere other than the cycle server, change this to the directory where a7a.train, a7a.dev, and a7a.test are
+DATA_PATH = "/u/cs246/data/adult/" 
 
 #returns the label and feature value vector for one datapoint (represented as a line (string) from the data file)
 def parse_line(line):
@@ -37,7 +37,6 @@ def init_model(args):
             w2 = np.loadtxt(f2)
             w2 = w2.reshape(1,len(w2))
     else:
-        #TODO (optional): If you want, you can experiment with a different random initialization. As-is, each weight is uniformly sampled from [-0.5,0.5).
         w1 = np.random.rand(args.hidden_dim, NUM_FEATURES) #bias included in NUM_FEATURES
         w2 = np.random.rand(1, args.hidden_dim + 1) #add bias column
         #w1 = np.random.uniform(low = -0.5, high = 0.5, size = (args.hidden_dim, NUM_FEATURES,))
@@ -46,13 +45,10 @@ def init_model(args):
     #At this point, w1 has shape (hidden_dim, NUM_FEATURES) and w2 has shape (1, hidden_dim + 1). In both, the last column is the bias weights.
 
 
-    #TODO: Replace this with whatever you want to use to represent the network; you could use use a tuple of (w1,w2), make a class, etc.
     model = (w1,w2)
-    #raise NotImplementedError #TODO: delete this once you implement this function
     return model
 
 def train_model(model, train_ys, train_xs, dev_ys, dev_xs, args):
-    #TODO: Implement training for the given model, respecting args
     old_train_accuracy = 0.0
     m = train_ys.shape[0]
     old_dev_accuracy = 0.0
@@ -67,9 +63,6 @@ def train_model(model, train_ys, train_xs, dev_ys, dev_xs, args):
         for eta in etas:
             lr = eta
             print(lr)
-            #if not args.iterations:
-            #    iterations = 1000
-           # if args.iterations:
             iterations = max(args.iterations, 1000)
             model = init_model(args)
             w1, w2 = extract_weights(model)
@@ -145,22 +138,14 @@ def train_model(model, train_ys, train_xs, dev_ys, dev_xs, args):
         model = (w1, w2)
         return model
     elif args.nodev:
-        #print('Not using dev set...')
         w1, w2 = extract_weights(model)
         lr = args.lr
         iterations = args.iterations
         for iteration in range(iterations):
             for x, y in zip(train_xs, train_ys):
                 y_hat, a_h, z_h, z_o = feedforward(w1, w2, x)
-           #     loss = log_likelihood(y, y_hat)
                 w1, w2 = backprop(x, y, y_hat, a_h, z_o, z_h, w1, w2, lr)
-            #if iterations <= 10:
-             #   print('Iteration #{}: {}.'.format(iteration,float(np.round(loss,2))))
-            #else:
-             #   if iteration % 10 == 0:
-              #      print('Iteration #{}: {}.'.format(iteration,float(np.round(loss,2))))
         model = (w1, w2)
-    #raise NotImplementedError #TODO: delete this once you implement this function
     return model
 
 def sigmoid(z):
@@ -175,8 +160,6 @@ def log_likelihood(y, y_hat):
     loss = -np.log(p)
     return loss
 
-# def log_derivative():
-
 def feedforward(w1, w2, x):
     z_h = np.dot(w1,x)
     a_h = np.append(sigmoid(z_h),1)
@@ -185,8 +168,6 @@ def feedforward(w1, w2, x):
     return y_hat, a_h, z_h, z_o
 
 def backprop(x, y, y_hat, a_h, z_o, z_h, w1, w2, lr):
-    #delta1 = (1/sigmoid(y * z_o)) * sigmoid_derivative(y * z_o)*y
-    #delta1 = (1/y_hat)*sigmoid_derivative(z_o)
     dy = ((-y)/y_hat) + ((1-y)/(1-y_hat))
     delta2 = np.dot(dy,sigmoid_derivative(z_o))
     dw2 = delta2 * a_h
@@ -198,7 +179,6 @@ def backprop(x, y, y_hat, a_h, z_o, z_h, w1, w2, lr):
 
 def test_accuracy(model, test_ys, test_xs):
     accuracy = 0.0
-    #TODO: Implement accuracy computation of given model on the test data
     w1, w2 = extract_weights(model)
     y_pred = []
     for x in test_xs:
@@ -211,15 +191,12 @@ def test_accuracy(model, test_ys, test_xs):
             y_pred[i] = 1
     y_pred = np.transpose(np.array([y_pred]))
     accuracy = float(sum(y_pred == test_ys)/m)
-    #raise NotImplementedError #TODO: delete this once you implement this function
     return accuracy
 
 def extract_weights(model):
     w1 = None
     w2 = None
-    #TODO: Extract the two weight matrices from the model and return them (they should be the same type and shape as they were in init_model, but now they have been updated during training)
     (w1, w2) = model
-    #raise NotImplementedError #TODO: delete this once you implement this function
     return w1, w2
 
 def main():
