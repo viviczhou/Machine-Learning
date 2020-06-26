@@ -4,7 +4,7 @@ if not __file__.endswith('_hmm_gaussian.py'):
     print('ERROR: This file is not named correctly! Please name it as Lastname_hmm_gaussian.py (replacing Lastname with your last name)!')
     exit(1)
 
-DATA_PATH = "/u/cs446/data/em/" #TODO: if doing development somewhere other than the cycle server (not recommended), then change this to the directory where your data file is (points.dat)
+DATA_PATH = "/u/cs446/data/em/"
 
 def parse_data(args):
     num = float
@@ -27,8 +27,7 @@ def init_model(args):
             sigmas = np.zeros((2,2))
         transitions = np.zeros((args.cluster_num,args.cluster_num)) #transitions[i][j] = probability of moving from cluster i to cluster j
         initials = np.zeros(args.cluster_num) #probability for starting in each state
-        #TODO: randomly initialize clusters (mus, sigmas, initials, and transitions)
-
+        
         # Set Seed
         seed = 1
         np.random.seed(seed)
@@ -45,7 +44,6 @@ def init_model(args):
         # Initialize transitions
         transitions = np.random.rand(args.cluster_num, args.cluster_num)
         transitions = transitions/transitions.sum(axis=1, keepdims= 1) # Normalize each row to sum up to 1
-        #raise NotImplementedError #remove when random initialization is implemented
     else:
         mus = []
         sigmas = []
@@ -66,9 +64,7 @@ def init_model(args):
         sigmas = np.asarray(sigmas)
         args.cluster_num = len(initials)
 
-    #TODO: Do whatever you want to pack mus, sigmas, initals, and transitions into the model variable (just a tuple, or a class, etc.)
     model = {'mus': mus, 'sigmas': sigmas, 'initials': initials, 'transitions': transitions}
-    #raise NotImplementedError #remove when model initialization is implemented
     return model
 
 def forward(model, data, args):
@@ -76,13 +72,10 @@ def forward(model, data, args):
     from math import log
     alphas = np.zeros((len(data),args.cluster_num))
     log_likelihood = 0.0
-    #TODO: Calculate and return forward probabilities (normalized at each timestep; see next line) and log_likelihood
+    # Calculate and return forward probabilities (normalized at each timestep; see next line) and log_likelihood
     # This function is used to calculate alphas
-    #NOTE: To avoid numerical problems, calculate the sum of alpha[t] at each step, normalize alpha[t] by that value,
-    # and increment log_likelihood by the log of the value you normalized by.
-    # This will prevent the probabilities from going to 0,
-    # and the scaling will be cancelled out in train_model when you normalize
-    # (you don't need to do anything different than what's in the notes). This was discussed in class on April 3rd.
+    # To avoid numerical problems, calculate the sum of alpha[t] at each step, normalize alpha[t] by that value, and increment log_likelihood by the log of the value you normalized by.
+    # This will prevent the probabilities from going to 0, and the scaling will be cancelled out in train_model when normalize
     initials, transitions, mus, sigmas = extract_parameters(model)
     T = len(data)
     for t in range(T):
@@ -103,13 +96,12 @@ def forward(model, data, args):
         alphas[t,:] = alphas[t,:]/np.sum(alphas[t,:])
         # Increment log_likelihood
         log_likelihood = log_likelihood + log(Z)
-    #raise NotImplementedError
     return alphas, log_likelihood
 
 def backward(model, data, args):
     from scipy.stats import multivariate_normal
     betas = np.zeros((len(data),args.cluster_num))
-    #TODO: Calculate and return backward probabilities (normalized like in forward before)
+    # Calculate and return backward probabilities (normalized like in forward before)
     # This function is used to calculate betas
     initials, transitions, mus, sigmas = extract_parameters(model)
     T = len(data)-1
@@ -125,12 +117,11 @@ def backward(model, data, args):
             betas[t,i] = beta
         # Normalize betas
         betas[t,:] = betas[t,:]/np.sum(betas[t,:])
-    #raise NotImplementedError
     return betas
 
 def train_model(model, train_xs, dev_xs, args):
     from scipy.stats import multivariate_normal
-    #TODO: train the model, respecting args (note that dev_xs is None if args.nodev is True)
+    # train the model, respecting args (note that dev_xs is None if args.nodev is True)
     T = train_xs.shape[0]
     K = args.cluster_num
     initials, transitions, mus, sigmas = extract_parameters(model)
@@ -169,31 +160,27 @@ def train_model(model, train_xs, dev_xs, args):
         if args.tied:
             sigmas = sigmas/T
     model = {'mus': mus, 'sigmas': sigmas, 'initials': initials, 'transitions': transitions}
-    #raise NotImplementedError #remove when model training is implemented
     return model
 
 def average_log_likelihood(model, data, args):
-    #TODO: implement average LL calculation (log likelihood of the data, divided by the length of the data)
-    #NOTE: yes, this is very simple, because you did most of the work in the forward function above
+    # implement average LL calculation (log likelihood of the data, divided by the length of the data)
     ll = 0.0
     _,log_likelihood = forward(model, data, args)
     ll = log_likelihood/len(data)
-    #raise NotImplementedError #remove when average log likelihood calculation is implemented
     return ll
 
 def extract_parameters(model):
-    #TODO: Extract initials, transitions, mus, and sigmas from the model and return them (same type and shape as in init_model)
+    # Extract initials, transitions, mus, and sigmas from the model and return them (same type and shape as in init_model)
     initials = model['initials']
     transitions = model['transitions']
     mus = model['mus']
     sigmas = model['sigmas']
-    #raise NotImplementedError #remove when parameter extraction is implemented
     return initials, transitions, mus, sigmas
 
 def main():
     import argparse
     import os
-    print('Gaussian') #Do not change, and do not print anything before this.
+    print('Gaussian') 
     parser = argparse.ArgumentParser(description='Use EM to fit a set of points')
     init_group = parser.add_mutually_exclusive_group(required=True)
     init_group.add_argument('--cluster_num', type=int, help='Randomly initialize this many clusters.')
