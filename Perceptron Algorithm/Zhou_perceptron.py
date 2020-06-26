@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 import numpy as np
-#TODO: understand that you should not need any other imports other than those already in this file; if you import something that is not installed by default on the csug machines, your code will crash and you will lose points
 
 NUM_FEATURES = 124 #features are 1 through 123 (123 only in test set), +1 for the bias
-DATA_PATH = "/u/cs246/data/adult/" #TODO: if you are working somewhere other than the csug server, change this to the directory where a7a.train, a7a.dev, and a7a.test are on your machine
+DATA_PATH = "/u/cs246/data/adult/"
 
-#returns the label and feature value vector for one datapoint (represented as a line (string) from the data file)
 def parse_line(line):
     tokens = line.split()
     x = np.zeros(NUM_FEATURES)
@@ -27,7 +25,6 @@ def parse_data(filename):
 
 def perceptron(train_ys, train_xs, dev_ys, dev_xs, args):
     weights = np.zeros(NUM_FEATURES)
-    #TODO: implement perceptron algorithm here, respecting args
     old_cost = float('inf')
     old_accuracy = 0.0
     m = train_ys.shape[0]
@@ -78,7 +75,6 @@ def perceptron(train_ys, train_xs, dev_ys, dev_xs, args):
 
 def test_accuracy(weights, test_ys, test_xs):
     accuracy = 0.0
-    #TODO: implement accuracy computation of given weight vector on the test data (i.e. how many test data points are classified correctly by the weight vector)
     m = test_ys.shape[0]
     for i in range(m):
         if (np.dot(test_xs[i],weights)*test_ys[i])>0:
